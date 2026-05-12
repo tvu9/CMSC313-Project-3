@@ -1,1 +1,20 @@
+-O0
+When comparing optimization levels, the -O0 optimization level means no optimization was done by the compiler. 
+The assembly generated will usually look very similar to the original C program. 
+Additionally, the compiler does not try to make the code run faster and will typically store variables on the stack in memory.
 
+-O1
+At -O1 optimization, the compiler will usually clean up any redundant instructions.
+The compiler also keeps some values in the registers instead of constantly storing them in memory.
+The compiler typically stores the values in %rbx, %rbp, %r12, %r13, and %r14.
+
+-O3
+At -O3 optimization, the compiler uses a more aggressive optimization approach to make the program run faster. 
+Additionally, this aggressive approach uses alignment instructions which is apparent in the dump_3.s file where we see line 17 using .p2align and so on. 
+The compiler also optimized the ASCII check on line 46 in the project3.c file. 
+The compiler used:
+leal	-32(%rdi), %eax
+cmpb	$94, %al
+
+This means instead of checking byte >= 32 and byte <= 126, the compiler does byte - 32 <= 94.
+Practically making the range 0-94 instead of 32-126
